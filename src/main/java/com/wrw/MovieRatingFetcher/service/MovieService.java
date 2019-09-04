@@ -7,5 +7,5 @@ import reactor.core.publisher.Mono;
 
 public interface MovieService {
 
-    public Mono<Movie> searchMovieByTitle(String apiKey, String title) throws Exception, MovieNotFoundException;
+    public Movie searchMovieByTitle(String apiKey, String title) throws Exception, MovieNotFoundException;
 }

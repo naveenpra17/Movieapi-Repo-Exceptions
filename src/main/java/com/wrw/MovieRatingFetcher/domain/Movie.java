@@ -1,13 +1,15 @@
 package com.wrw.MovieRatingFetcher.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import javax.websocket.server.ServerEndpoint;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class Movie {
   @JsonProperty("Title")
     private String Title;

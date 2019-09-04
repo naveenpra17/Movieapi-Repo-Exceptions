@@ -2,7 +2,9 @@ package com.wrw.MovieRatingFetcher.service;
 
 import com.wrw.MovieRatingFetcher.domain.Movie;
 import com.wrw.MovieRatingFetcher.exceptions.MovieNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import org.slf4j.Logger;
@@ -27,18 +29,24 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Mono<Movie> searchMovieByTitle(String apiKey, String title) throws  Exception, MovieNotFoundException {
+    public Movie searchMovieByTitle(String apiKey, String title) throws  Exception, MovieNotFoundException {
 
-      if( webClient.get()
-        .uri("/?apikey="+apiKey+"&t="+title)
+     Movie movie= webClient.get()
+        .uri("/?apikey=" + apiKey + "&t=" + title)
         .retrieve()
-        .bodyToMono(Movie.class).toString().contains("null")) {
+        .bodyToMono(Movie.class)
+       .block();
+      System.out.println(movie.getTitle());
+      if(movie.getTitle()==null){
+        throw new MovieNotFoundException("Please Enter A Valid Movie Name");
+      }
+        else
         return webClient.get()
           .uri("/?apikey=" + apiKey + "&t=" + title)
           .retrieve()
-          .bodyToMono(Movie.class);
-      }else
-        throw new  MovieNotFoundException("Movie not available shailesh");
+          .bodyToMono(Movie.class)
+          .block();
+
     }
 
 //    public static void handler(Movie s){

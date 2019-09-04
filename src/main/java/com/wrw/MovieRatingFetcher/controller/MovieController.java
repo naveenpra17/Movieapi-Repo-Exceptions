@@ -29,7 +29,7 @@ public class MovieController {
     }
 
     @GetMapping("movie/{movieName}")
-    public Mono<Movie>getMovieByTitle(@PathVariable String movieName) throws Exception, MovieNotFoundException {
+    public Movie getMovieByTitle(@PathVariable String movieName) throws Exception, MovieNotFoundException {
         String apiKey = environment.getProperty("app.api.key");
 //        System.out.println(movieName);
         return movieService.searchMovieByTitle(apiKey,movieName);
